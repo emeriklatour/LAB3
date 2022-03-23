@@ -32,7 +32,7 @@ public class MenuFenetre extends JMenuBar {
 			fileChooser.setDialogTitle("Sélectionnez une image");
 			fileChooser.setAcceptAllFileFilterUsed(false);
 			// Créer un filtre
-			FileNameExtensionFilter filtre = new FileNameExtensionFilter(".png", ".jpg", "jpeg");
+			FileNameExtensionFilter filtre = new FileNameExtensionFilter(".png", "png");
 			fileChooser.addChoosableFileFilter(filtre);
 
 			int returnValue = fileChooser.showOpenDialog(null);

@@ -16,7 +16,14 @@ public class PanneauImage extends Panneau {
 	}
 
 	@Override
-	protected void updateDisplay() {
+	public void paint(Graphics g) {
+		super.paint(g);
+		g.drawImage(
+				image.getImageToPaint(),
+				perspective.getPosX(),
+				perspective.getPosY(),
+				null
+		);
 
 	}
 }

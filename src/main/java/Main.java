@@ -22,7 +22,7 @@ public class Main {
 		Arrays.stream(Side.values()).forEach(
 			(s) -> perspectives.put(s, new Perspective())
 		);
-		return new Modele(new Image(""), perspectives);
+		return new Modele(new Image(), perspectives);
 	}
 
 	private static Command getInitCommand(Modele modele) {

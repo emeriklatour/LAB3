@@ -1,6 +1,6 @@
 package mvc.modele;
 
-import java.util.Observable;
+import mvc.observateur.Observable;
 
 public class Perspective extends Observable {
 	private int posX;

@@ -14,6 +14,13 @@ public class PanneauVignette extends Vignette {
 	}
 
 	@Override
-	protected void updateDisplay() {
+	public void paint(Graphics g) {
+		super.paint(g);
+		g.drawImage(
+				image.getImageToPaint(),
+				-100,
+				-100,
+				null
+		);
 	}
 }
