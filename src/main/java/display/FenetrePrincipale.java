@@ -8,7 +8,7 @@ import java.awt.*;
 public class FenetrePrincipale extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private static final String TITRE_FENETRE = "Laboratoire 3 : LOG121";
-	private static final Dimension DIMENSION = new Dimension(1000, 1000);
+	private static final Dimension DIMENSION = new Dimension(1920, 1080);
 
 	public FenetrePrincipale(Modele modele) {
 		setWindowDefaults();

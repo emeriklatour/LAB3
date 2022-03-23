@@ -22,6 +22,8 @@ public class PanneauImage extends Panneau {
 				image.getImageToPaint(),
 				perspective.getPosX(),
 				perspective.getPosY(),
+				300 * (perspective.getZoomFactor() / 1000),
+				300 * (perspective.getZoomFactor() / 1000),
 				null
 		);
 

@@ -18,8 +18,10 @@ public class PanneauVignette extends Vignette {
 		super.paint(g);
 		g.drawImage(
 				image.getImageToPaint(),
-				-100,
-				-100,
+				16,
+				300,
+				300,
+				300,
 				null
 		);
 	}

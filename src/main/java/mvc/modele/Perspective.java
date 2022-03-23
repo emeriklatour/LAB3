@@ -10,7 +10,7 @@ public class Perspective extends Observable {
 	public Perspective() {
 		this.posX = 0;
 		this.posY = 0;
-		this.zoomFactor = 0;
+		this.zoomFactor = 1000;
 	}
 
 	public int getPosX() {
