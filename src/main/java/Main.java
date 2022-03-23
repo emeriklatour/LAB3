@@ -6,6 +6,7 @@ import mvc.modele.Modele;
 import mvc.modele.Perspective;
 import utils.Side;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,8 +19,9 @@ public class Main {
 
 	private static Modele getDefaultModele() {
 		Map<Side, Perspective> perspectives = new HashMap<>();
-		perspectives.put(Side.LEFT, new Perspective());
-		perspectives.put(Side.RIGHT, new Perspective());
+		Arrays.stream(Side.values()).forEach(
+			(s) -> perspectives.put(s, new Perspective())
+		);
 		return new Modele(new Image(""), perspectives);
 	}
 

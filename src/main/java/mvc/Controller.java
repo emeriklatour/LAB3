@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class Controller implements IController {
 	private static Controller controllerSingleton = new Controller();
+	private GestionnaireSauvegarde gSauvegarde = new GestionnaireSauvegarde(this);
 	private Map<Side, ArrayList<Command>> executedCommands = new HashMap<>();
 	private Modele modele;
 
@@ -32,5 +33,10 @@ public class Controller implements IController {
 	@Override
 	public void handleCommand(Command command) {
 		command.execute(this);
+	}
+
+	@Override
+	public GestionnaireSauvegarde getGSauvegarde() {
+		return gSauvegarde;
 	}
 }

@@ -1,7 +1,6 @@
 package display;
 
 import mvc.modele.Modele;
-import utils.Side;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,10 +12,8 @@ public class FenetrePrincipale extends JFrame {
 
 	public FenetrePrincipale(Modele modele) {
 		setWindowDefaults();
-		addVignette(modele);
-		for (Side side : Side.values()) {
-			addPanneauImage(modele, side);
-		}
+		add(new MenuFenetre(), BorderLayout.NORTH);
+		add(new PanneauPrincipale(modele));
 	}
 
 	private void setWindowDefaults() {
@@ -26,20 +23,5 @@ public class FenetrePrincipale extends JFrame {
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setResizable(false);
-
-		GridLayout layout = new GridLayout(1, 1 + Side.values().length);
-		setLayout(layout);
-	}
-
-	private void addVignette(Modele modele) {
-		add(new PanneauVignette(modele.getImage()));
-	}
-
-	private void addPanneauImage(Modele modele, Side side) {
-		add(new PanneauImage(
-				side,
-				modele.getImage(),
-				modele.getPerspective(side)
-		));
 	}
 }

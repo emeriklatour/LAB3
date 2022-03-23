@@ -8,6 +8,8 @@ import utils.Side;
 import java.awt.*;
 
 public class PanneauImage extends Panneau {
+	private static final long serialVersionUID = 1L;
+
 	public PanneauImage(Side side, Image image, Perspective perspective) {
 		super(side, image, perspective);
 		this.setBackground(new Color(0, 0, 255));
