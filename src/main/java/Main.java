@@ -34,6 +34,11 @@ public class Main {
 
 			@Override
 			public void revert(Controller controller) {}
+
+			@Override
+			public Side getSide() {
+				return null;
+			}
 		};
 	}
 }
