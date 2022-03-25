@@ -4,16 +4,16 @@ import command.Command;
 import mvc.modele.Clipboard;
 import mvc.modele.Modele;
 import mvc.modele.Perspective;
+import mvc.modele.Perspective;
 import utils.Side;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Controller implements IController {
 	private static Controller controllerSingleton = new Controller();
 	private GestionnaireSauvegarde gSauvegarde = new GestionnaireSauvegarde(this);
-	private Map<Side, ArrayList<Command>> executedCommands = new HashMap<>();
+	private Map<Side, ArrayList<Command>> executedCommands = generateEmptyHistory();
 	private Modele modele;
 	private Clipboard<Perspective> clipBoard = new Clipboard<>();
 
@@ -30,6 +30,9 @@ public class Controller implements IController {
 		this.modele = modele;
 	}
 
+	public ListIterator<Command> getExecutedCommands(Side side) {
+		ArrayList<Command> commands = executedCommands.get(side);
+		return commands.listIterator(commands.size());
 	public Clipboard<Perspective> getClipBoard() {
 		return clipBoard;
 	}
@@ -41,10 +44,27 @@ public class Controller implements IController {
 	@Override
 	public void handleCommand(Command command) {
 		command.execute(this);
+		registerCommand(command);
 	}
 
 	@Override
 	public GestionnaireSauvegarde getGSauvegarde() {
 		return gSauvegarde;
+	}
+
+	private Map<Side, ArrayList<Command>> generateEmptyHistory() {
+		return Arrays.stream(Side.values())
+			.collect(
+				Collectors.toMap(
+					(side) -> side,
+					(side) -> new ArrayList<>()
+				)
+			);
+	}
+
+	private void registerCommand(Command command) {
+		if (command.getSide() != null) {
+			executedCommands.get(command.getSide()).add(command);
+		}
 	}
 }
