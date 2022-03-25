@@ -1,7 +1,9 @@
 package mvc;
 
 import command.Command;
+import mvc.modele.Clipboard;
 import mvc.modele.Modele;
+import mvc.modele.Perspective;
 import utils.Side;
 
 import java.util.*;
@@ -11,6 +13,8 @@ public class Controller implements IController {
 	private static Controller controllerSingleton = new Controller();
 	private Map<Side, ArrayList<Command>> executedCommands = generateEmptyHistory();
 	private Modele modele;
+	private Clipboard<Perspective> clipBoard = new Clipboard<>();
+
 
 	public static IController getInstance() {
 		return controllerSingleton;
@@ -27,6 +31,10 @@ public class Controller implements IController {
 	public ListIterator<Command> getExecutedCommands(Side side) {
 		ArrayList<Command> commands = executedCommands.get(side);
 		return commands.listIterator(commands.size());
+	}
+
+	public Clipboard<Perspective> getClipBoard () {
+		return clipBoard;
 	}
 
 	@Override
