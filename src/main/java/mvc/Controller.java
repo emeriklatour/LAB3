@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 public class Controller implements IController {
 	private static Controller controllerSingleton = new Controller();
-	private GestionnaireSauvegarde gSauvegarde = new GestionnaireSauvegarde(this);
 	private Map<Side, ArrayList<Command>> executedCommands = generateEmptyHistory();
 	private Modele modele;
 
@@ -34,11 +33,6 @@ public class Controller implements IController {
 	public void handleCommand(Command command) {
 		command.execute(this);
 		registerCommand(command);
-	}
-
-	@Override
-	public GestionnaireSauvegarde getGSauvegarde() {
-		return gSauvegarde;
 	}
 
 	private Map<Side, ArrayList<Command>> generateEmptyHistory() {

@@ -1,9 +1,14 @@
 package mvc;
 
 public class GestionnaireSauvegarde {
+	private static GestionnaireSauvegarde gSauvegarde = new GestionnaireSauvegarde();
 	private Controller controller;
 
-	public GestionnaireSauvegarde(Controller controller) {
+	public static GestionnaireSauvegarde getInstance() {
+		return gSauvegarde;
+	}
+
+	public void registerController(Controller controller) {
 		this.controller = controller;
 	}
 
