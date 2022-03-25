@@ -33,36 +33,34 @@ public class Controller implements IController {
 	public ListIterator<Command> getExecutedCommands(Side side) {
 		ArrayList<Command> commands = executedCommands.get(side);
 		return commands.listIterator(commands.size());
-	public Clipboard<Perspective> getClipBoard() {
+	}
+
+	public Clipboard<Perspective> getClipBoard () {
 		return clipBoard;
 	}
 
-	public ArrayList<Command> getExecutedCommands(Side side) {
-		return executedCommands.get(side);
-	}
-
 	@Override
-	public void handleCommand(Command command) {
+	public void handleCommand (Command command){
 		command.execute(this);
 		registerCommand(command);
 	}
 
 	@Override
-	public GestionnaireSauvegarde getGSauvegarde() {
+	public GestionnaireSauvegarde getGSauvegarde () {
 		return gSauvegarde;
 	}
 
-	private Map<Side, ArrayList<Command>> generateEmptyHistory() {
+	private Map<Side, ArrayList<Command>> generateEmptyHistory () {
 		return Arrays.stream(Side.values())
-			.collect(
-				Collectors.toMap(
-					(side) -> side,
-					(side) -> new ArrayList<>()
-				)
-			);
+				.collect(
+						Collectors.toMap(
+								(side) -> side,
+								(side) -> new ArrayList<>()
+						)
+				);
 	}
 
-	private void registerCommand(Command command) {
+	private void registerCommand(Command command){
 		if (command.getSide() != null) {
 			executedCommands.get(command.getSide()).add(command);
 		}
