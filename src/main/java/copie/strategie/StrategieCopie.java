@@ -1,4 +1,4 @@
-package mvc.strategie;
+package copie.strategie;
 
 public interface StrategieCopie<T>{
 

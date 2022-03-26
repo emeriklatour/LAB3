@@ -1,6 +1,5 @@
 package display;
 
-import mvc.Controller;
 import mvc.GestionnaireSauvegarde;
 
 import javax.swing.*;
@@ -18,7 +17,7 @@ public class MenuFenetre extends JMenuBar {
 	private GestionnaireSauvegarde gSauvegarde;
 
 	public MenuFenetre() {
-		gSauvegarde = Controller.getInstance().getGSauvegarde();
+		this.gSauvegarde = GestionnaireSauvegarde.getInstance();
 		ajouterMenuFichier();
 	}
 
@@ -31,7 +30,6 @@ public class MenuFenetre extends JMenuBar {
 			JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 			fileChooser.setDialogTitle("Sélectionnez une image");
 			fileChooser.setAcceptAllFileFilterUsed(false);
-			// Créer un filtre
 			FileNameExtensionFilter filtre = new FileNameExtensionFilter(".png", "png");
 			fileChooser.addChoosableFileFilter(filtre);
 
@@ -40,7 +38,7 @@ public class MenuFenetre extends JMenuBar {
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
 				File selectedFile = fileChooser.getSelectedFile();
 				System.out.println(selectedFile.getAbsolutePath());
-				gSauvegarde.loadNewImage(selectedFile.getAbsolutePath());
+				this.gSauvegarde.loadNewImage(selectedFile.getAbsolutePath());
 			}
 		});
 
