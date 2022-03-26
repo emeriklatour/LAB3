@@ -6,10 +6,11 @@ import mvc.modele.Modele;
 import mvc.modele.Perspective;
 import utils.Side;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Controller implements IController {
+public class Controller implements IController, Serializable {
 	private static Controller controllerSingleton = new Controller();
 	private Map<Side, ArrayList<Command>> executedCommands = generateEmptyHistory();
 	private Modele modele;
@@ -41,6 +42,10 @@ public class Controller implements IController {
 	public void handleCommand(Command command) {
 		command.execute(this);
 		registerCommand(command);
+	}
+
+	public void initializeView(){
+
 	}
 
 	private Map<Side, ArrayList<Command>> generateEmptyHistory() {

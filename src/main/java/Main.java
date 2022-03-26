@@ -33,6 +33,7 @@ public class Main {
 				controller.setModele(modele);
 				GestionnaireSauvegarde.getInstance()
 						.registerController(controller);
+				controller.initializeView();
 			}
 
 			@Override
