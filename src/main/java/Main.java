@@ -1,6 +1,7 @@
 import command.Command;
 import display.FenetrePrincipale;
 import mvc.Controller;
+import mvc.GestionnaireSauvegarde;
 import mvc.modele.Image;
 import mvc.modele.Modele;
 import mvc.modele.Perspective;
@@ -30,6 +31,8 @@ public class Main {
 			@Override
 			public void execute(Controller controller) {
 				controller.setModele(modele);
+				GestionnaireSauvegarde.getInstance()
+						.registerController(controller);
 			}
 
 			@Override
