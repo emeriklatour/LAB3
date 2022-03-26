@@ -1,7 +1,7 @@
-package mvc.strategie.impl;
+package copie.strategie.impl;
 
 import mvc.modele.Perspective;
-import mvc.strategie.StrategieCopie;
+import copie.strategie.StrategieCopie;
 
 public class CopyBoth implements StrategieCopie<Perspective> {
     @Override

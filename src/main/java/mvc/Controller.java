@@ -1,9 +1,8 @@
 package mvc;
 
 import command.Command;
-import mvc.modele.Clipboard;
+import copie.Clipboard;
 import mvc.modele.Modele;
-import mvc.modele.Perspective;
 import mvc.modele.Perspective;
 import utils.Side;
 

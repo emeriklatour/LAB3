@@ -1,9 +1,9 @@
-package mvc.modele;
+package copie;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import mvc.strategie.StrategieCopie;
+import copie.strategie.StrategieCopie;
 
 @NoArgsConstructor
 @Getter
