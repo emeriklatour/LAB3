@@ -1,7 +1,5 @@
 package display;
 
-import mvc.modele.Modele;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,12 +7,21 @@ public class FenetrePrincipale extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private static final String TITRE_FENETRE = "Laboratoire 3 : LOG121";
 	private static final Dimension DIMENSION = new Dimension(800, 600);
+	private JPanel panneauPricipale;
 
-	public FenetrePrincipale(Modele modele) {
+	public FenetrePrincipale() {
 		setWindowDefaults();
+
 		add(new MenuFenetre(), BorderLayout.NORTH);
-		add(new PanneauPrincipale(modele));
+
+		panneauPricipale = new PanneauPrincipale();
+		add(panneauPricipale);
+	}
+
+	public void addToPanneau(JPanel vue) {
+		panneauPricipale.add(vue);
 		this.validate();
+		this.repaint();
 	}
 
 	private void setWindowDefaults() {
@@ -23,6 +30,6 @@ public class FenetrePrincipale extends JFrame {
 		setSize(DIMENSION);
 		setVisible(true);
 		setLocationRelativeTo(null);
-		setResizable(false);
+		setResizable(true);
 	}
 }

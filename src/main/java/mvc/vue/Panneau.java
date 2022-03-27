@@ -4,7 +4,9 @@ import mvc.modele.Image;
 import mvc.modele.Perspective;
 import utils.Side;
 
-public abstract class Panneau extends BaseVue {
+import java.awt.*;
+
+public class Panneau extends Vue {
 	protected Side side;
 	protected Image image;
 	protected Perspective perspective;
@@ -15,5 +17,19 @@ public abstract class Panneau extends BaseVue {
 		this.perspective = perspective;
 		image.addObserver(this);
 		perspective.addObserver(this);
+		this.setBackground(new Color(0, 0, 255));
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		g.drawImage(
+				image.getImageToPaint(),
+				perspective.getPosX(),
+				perspective.getPosY(),
+				300 * (perspective.getZoomFactor() / 1000),
+				300 * (perspective.getZoomFactor() / 1000),
+				null
+		);
 	}
 }
