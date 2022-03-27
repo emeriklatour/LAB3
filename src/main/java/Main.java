@@ -5,6 +5,8 @@ import mvc.GestionnaireSauvegarde;
 import mvc.modele.Image;
 import mvc.modele.Modele;
 import mvc.modele.Perspective;
+import mvc.vue.Panneau;
+import mvc.vue.Vignette;
 import utils.Side;
 
 import java.util.Arrays;
@@ -14,8 +16,8 @@ import java.util.Map;
 public class Main {
 	public static void main(String[] args) {
 		Modele modele = getDefaultModele();
+		createVue(modele);
 		Controller.getInstance().handleCommand(getInitCommand(modele));
-		FenetrePrincipale fenetrePrincipale = new FenetrePrincipale(modele);
 	}
 
 	private static Modele getDefaultModele() {
@@ -26,6 +28,20 @@ public class Main {
 		return new Modele(new Image(), perspectives);
 	}
 
+	private static void createVue(Modele modele) {
+		FenetrePrincipale fenetrePrincipale = new FenetrePrincipale();
+		fenetrePrincipale.addToPanneau(new Vignette(modele.getImage()));
+		Arrays.stream(Side.values()).forEach(
+				(s) -> fenetrePrincipale.addToPanneau(
+						new Panneau(
+							s,
+							modele.getImage(),
+							modele.getPerspective(s)
+						)
+				)
+		);
+	}
+
 	private static Command getInitCommand(Modele modele) {
 		return new Command() {
 			@Override
@@ -33,7 +49,6 @@ public class Main {
 				controller.setModele(modele);
 				GestionnaireSauvegarde.getInstance()
 						.registerController(controller);
-				controller.initializeView();
 			}
 
 			@Override
