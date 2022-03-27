@@ -2,16 +2,15 @@ package mvc.vue;
 
 import mvc.modele.Image;
 import mvc.modele.Perspective;
-import utils.Side;
 
 import java.awt.*;
 
 public class Panneau extends Vue {
-	protected Side side;
+	protected int side;
 	protected Image image;
 	protected Perspective perspective;
 
-	public Panneau(Side side, Image image, Perspective perspective) {
+	public Panneau(int side, Image image, Perspective perspective) {
 		this.side = side;
 		this.image = image;
 		this.perspective = perspective;

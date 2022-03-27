@@ -6,27 +6,30 @@ import mvc.modele.Modele;
 import mvc.modele.Perspective;
 import mvc.vue.Panneau;
 import mvc.vue.Vignette;
-import utils.Side;
+
 import javax.swing.*;
 import java.util.*;
+import java.util.stream.IntStream;
 
 @NoArgsConstructor
 public class DefaultInitializer extends Initializer {
     @Override
     public Modele createModele() {
-        Map<Side, Perspective> perspectives = new HashMap<>();
-        Arrays.stream(Side.values()).forEach(
-                (s) -> perspectives.put(s, new Perspective())
+        return new Modele(
+                new Image(),
+                new Perspective[] {
+                        new Perspective(),
+                        new Perspective()
+                }
         );
-        return new Modele(new Image(), perspectives);
     }
 
     @Override
     public ArrayList<JPanel> createVues(Modele m) {
         ArrayList<JPanel> panels = new ArrayList<>();
         panels.add(new Vignette(m.getImage()));
-        Arrays.stream(Side.values()).forEach(
-                (s) -> panels.add(
+        IntStream.range(0, m.getNbPerspective())
+                .forEach(s -> panels.add(
                         new Panneau(
                                 s,
                                 m.getImage(),

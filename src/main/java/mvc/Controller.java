@@ -4,15 +4,15 @@ import command.Command;
 import copie.Clipboard;
 import mvc.modele.Modele;
 import mvc.modele.Perspective;
-import utils.Side;
 
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Controller implements IController, Serializable {
 	private static Controller controllerSingleton = new Controller();
-	private Map<Side, ArrayList<Command>> executedCommands = generateEmptyHistory();
+	private ArrayList<ArrayList<Command>> executedCommands;
 	private Modele modele;
 	private Clipboard<Perspective> clipBoard = new Clipboard<>();
 
@@ -26,9 +26,10 @@ public class Controller implements IController, Serializable {
 
 	public void setModele(Modele modele) {
 		this.modele = modele;
+		executedCommands = generateEmptyHistory(modele.getNbPerspective());
 	}
 
-	public ListIterator<Command> getExecutedCommands(Side side) {
+	public ListIterator<Command> getExecutedCommands(int side) {
 		ArrayList<Command> commands = executedCommands.get(side);
 		return commands.listIterator(commands.size());
 	}
@@ -43,18 +44,14 @@ public class Controller implements IController, Serializable {
 		registerCommand(command);
 	}
 
-	private Map<Side, ArrayList<Command>> generateEmptyHistory() {
-		return Arrays.stream(Side.values())
-			.collect(
-				Collectors.toMap(
-					(side) -> side,
-					(side) -> new ArrayList<>()
-				)
-			);
+	private ArrayList<ArrayList<Command>> generateEmptyHistory(int nbSide) {
+		return IntStream.range(0, nbSide)
+				.mapToObj(s -> new ArrayList<Command>())
+				.collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	private void registerCommand(Command command) {
-		if (command.getSide() != null) {
+		if (command.getSide() != -1) {
 			executedCommands.get(command.getSide()).add(command);
 		}
 	}
