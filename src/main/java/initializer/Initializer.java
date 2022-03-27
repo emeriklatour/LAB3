@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import mvc.Controller;
 import mvc.GestionnaireSauvegarde;
 import mvc.modele.Modele;
-import utils.Side;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -36,8 +35,8 @@ public abstract class Initializer {
             public void revert(Controller controller) {}
 
             @Override
-            public Side getSide() {
-                return null;
+            public int getSide() {
+                return -1;
             }
         };
     }
