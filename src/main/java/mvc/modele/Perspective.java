@@ -40,8 +40,4 @@ public class Perspective extends Observable implements Serializable {
 		this.zoomFactor = zoomFactor;
 		notifyObservers();
 	}
-
-	public void notifyReloaded(){
-		notifyObservers();
-	}
 }
