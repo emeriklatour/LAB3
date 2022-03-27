@@ -1,9 +1,9 @@
-import Initializer.DefaultViewInitializer;
-import Initializer.ViewInitializer;
+import initializer.DefaultInitializer;
+import initializer.Initializer;
 
 public class Main {
 	public static void main(String[] args) {
-		ViewInitializer initializer = new DefaultViewInitializer();
+		Initializer initializer = new DefaultInitializer();
 		initializer.start();
 	}
 }

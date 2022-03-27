@@ -1,4 +1,4 @@
-package Initializer;
+package initializer;
 
 import lombok.NoArgsConstructor;
 import mvc.modele.Image;
@@ -7,12 +7,11 @@ import mvc.modele.Perspective;
 import mvc.vue.Panneau;
 import mvc.vue.Vignette;
 import utils.Side;
-
 import javax.swing.*;
 import java.util.*;
 
 @NoArgsConstructor
-public class DefaultViewInitializer extends ViewInitializer{
+public class DefaultInitializer extends Initializer {
     @Override
     public Modele createModele() {
         Map<Side, Perspective> perspectives = new HashMap<>();

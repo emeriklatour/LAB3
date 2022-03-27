@@ -1,4 +1,4 @@
-package Initializer;
+package initializer;
 
 import command.Command;
 import display.FenetrePrincipale;
@@ -6,14 +6,13 @@ import lombok.NoArgsConstructor;
 import mvc.Controller;
 import mvc.GestionnaireSauvegarde;
 import mvc.modele.Modele;
-import mvc.vue.Vignette;
 import utils.Side;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
 @NoArgsConstructor
-public abstract class ViewInitializer {
+public abstract class Initializer {
 
     public void start(){
         Modele modele = createModele();
