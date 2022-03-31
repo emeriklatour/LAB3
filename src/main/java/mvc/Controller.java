@@ -1,18 +1,20 @@
 package mvc;
 
 import command.Command;
+import copie.Clipboard;
 import mvc.modele.Modele;
-import utils.Side;
+import mvc.modele.Perspective;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.Serializable;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-public class Controller implements IController {
+public class Controller implements IController, Serializable {
 	private static Controller controllerSingleton = new Controller();
-	private GestionnaireSauvegarde gSauvegarde = new GestionnaireSauvegarde(this);
-	private Map<Side, ArrayList<Command>> executedCommands = new HashMap<>();
+	private ArrayList<ArrayList<Command>> executedCommands;
 	private Modele modele;
+	private Clipboard<Perspective> clipBoard = new Clipboard<>();
 
 	public static IController getInstance() {
 		return controllerSingleton;
@@ -24,19 +26,33 @@ public class Controller implements IController {
 
 	public void setModele(Modele modele) {
 		this.modele = modele;
+		executedCommands = generateEmptyHistory(modele.getNbPerspective());
 	}
 
-	public ArrayList<Command> getExecutedCommands(Side side) {
-		return executedCommands.get(side);
+	public ListIterator<Command> getExecutedCommands(int side) {
+		ArrayList<Command> commands = executedCommands.get(side);
+		return commands.listIterator(commands.size());
+	}
+
+	public Clipboard<Perspective> getClipboard () {
+		return clipBoard;
 	}
 
 	@Override
 	public void handleCommand(Command command) {
 		command.execute(this);
+		registerCommand(command);
 	}
 
-	@Override
-	public GestionnaireSauvegarde getGSauvegarde() {
-		return gSauvegarde;
+	private ArrayList<ArrayList<Command>> generateEmptyHistory(int nbSide) {
+		return IntStream.range(0, nbSide)
+				.mapToObj(s -> new ArrayList<Command>())
+				.collect(Collectors.toCollection(ArrayList::new));
+	}
+
+	private void registerCommand(Command command) {
+		if (command.getSide() != -1) {
+			executedCommands.get(command.getSide()).add(command);
+		}
 	}
 }

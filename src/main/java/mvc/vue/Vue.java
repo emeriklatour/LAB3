@@ -4,7 +4,7 @@ import mvc.observateur.Observer;
 
 import javax.swing.*;
 
-public abstract class BaseVue extends JPanel implements Observer {
+public abstract class Vue extends JPanel implements Observer {
 	@Override
 	public void update() {
 		repaint();

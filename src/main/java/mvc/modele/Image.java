@@ -2,11 +2,13 @@ package mvc.modele;
 
 import javax.imageio.ImageIO;
 import java.io.File;
+import java.io.Serializable;
+
 import mvc.observateur.Observable;
 
-public class Image extends Observable {
+public class Image extends Observable implements Serializable {
 	private String imagePath;
-	private java.awt.Image imageToPaint;
+	private transient java.awt.Image imageToPaint;
 
 	public Image() {}
 

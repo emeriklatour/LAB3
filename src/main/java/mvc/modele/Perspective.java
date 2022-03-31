@@ -1,8 +1,9 @@
 package mvc.modele;
 
 import mvc.observateur.Observable;
+import java.io.Serializable;
 
-public class Perspective extends Observable {
+public class Perspective extends Observable implements Serializable {
 	private int posX;
 	private int posY;
 	private int zoomFactor;
@@ -27,13 +28,16 @@ public class Perspective extends Observable {
 
 	public void setPosX(int posX) {
 		this.posX = posX;
+		notifyObservers();
 	}
 
 	public void setPosY(int posY) {
 		this.posY = posY;
+		notifyObservers();
 	}
 
 	public void setZoomFactor(int zoomFactor) {
 		this.zoomFactor = zoomFactor;
+		notifyObservers();
 	}
 }

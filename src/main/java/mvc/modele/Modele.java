@@ -1,15 +1,15 @@
 package mvc.modele;
 
-import utils.Side;
+import copie.strategie.impl.CopyBoth;
 
 import java.io.Serializable;
-import java.util.Map;
+import java.util.stream.IntStream;
 
 public class Modele implements Serializable {
-	private Image image;
-	private Map<Side, Perspective> perspectives;
+	private final Image image;
+	private final Perspective[] perspectives;
 
-	public Modele(Image image, Map<Side, Perspective> perspectives) {
+	public Modele(Image image, Perspective[] perspectives) {
 		this.image = image;
 		this.perspectives = perspectives;
 	}
@@ -18,7 +18,18 @@ public class Modele implements Serializable {
 		return image;
 	}
 
-	public Perspective getPerspective(Side side) {
-		return perspectives.get(side);
+	public void copyFrom(Modele m){
+		this.image.setImagePath(m.getImage().getImagePath());
+		CopyBoth copyBoth = new CopyBoth();
+		IntStream.range(0, perspectives.length)
+				.forEach(s -> copyBoth.paste(perspectives[s], m.getPerspective(s)));
+	}
+
+	public Perspective getPerspective(int side) {
+		return perspectives[side];
+	}
+
+	public int getNbPerspective() {
+		return perspectives.length;
 	}
 }
