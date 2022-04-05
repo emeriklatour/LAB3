@@ -36,29 +36,23 @@ public class Panneau extends Vue {
 	private JPopupMenu createCommandMenu(int side) {
 		final JPopupMenu menu = new JPopupMenu("Menu");
 
-		JMenuItem copy = new JMenuItem(new AbstractAction() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				createCopyMenu(side);
-			}
+		JMenuItem copy = new JMenuItem("Copy");
+		copy.addActionListener((ActionEvent e) -> {
+			createCopyMenu(side);
 		});
-		JMenuItem paste = new JMenuItem(new AbstractAction() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Controller.getInstance().handleCommand(new Paste(side));
-			}
+		JMenuItem paste = new JMenuItem("Paste");
+		paste.addActionListener((ActionEvent e) -> {
+			Controller.getInstance().handleCommand(new Paste(side));
+
 		});
-		JMenuItem undo = new JMenuItem(new AbstractAction() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Controller.getInstance().handleCommand(new Undo(side));
-			}
+		JMenuItem undo = new JMenuItem("Undo");
+		undo.addActionListener((ActionEvent e) -> {
+			Controller.getInstance().handleCommand(new Undo(side));
 		});
-		JMenuItem redo = new JMenuItem(new AbstractAction() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Controller.getInstance().handleCommand(new Redo(side));
-			}
+
+		JMenuItem redo = new JMenuItem("Redo");
+		redo.addActionListener((ActionEvent e) -> {
+			Controller.getInstance().handleCommand(new Redo(side));
 		});
 
 		menu.add(copy);
@@ -89,21 +83,6 @@ public class Panneau extends Vue {
 		AffineTransform at = AffineTransform.getTranslateInstance(x, y);
 		at.scale(zoom, zoom);
 		g2.drawRenderedImage((BufferedImage) image.getImageToPaint(), at);
-
-		/*AffineTransform at = g2.getTransform();
-		at.translate(zoomX, zoomY);
-		at.scale(zoom, zoom);
-		at.translate(-zoomX, -zoomY);
-		g2.setTransform(at);*/
-
-		/*g.drawImage(
-				image.getImageToPaint(),
-				perspective.getPosX(),
-				perspective.getPosY(),
-				300 * (perspective.getZoomFactor() / 1000),
-				300 * (perspective.getZoomFactor() / 1000),
-				null
-		);*/
 
 		currPanel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -188,8 +167,6 @@ public class Panneau extends Vue {
 			}
 		});
 		confirmCopy.setPreferredSize(new Dimension(100,30));
-
-
 
 		radioPanel.add(copyTranslate);
 		radioPanel.add(copyZoom);
