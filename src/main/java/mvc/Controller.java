@@ -14,7 +14,7 @@ public class Controller implements IController, Serializable {
 	private static Controller controllerSingleton = new Controller();
 	private ArrayList<ArrayList<Command>> executedCommands;
 	private Modele modele;
-	private Clipboard<Perspective> clipBoard = new Clipboard<>();
+	private Clipboard<Perspective> clipBoard;
 
 	public static IController getInstance() {
 		return controllerSingleton;
@@ -31,11 +31,15 @@ public class Controller implements IController, Serializable {
 
 	public ListIterator<Command> getExecutedCommands(int side) {
 		ArrayList<Command> commands = executedCommands.get(side);
-		return commands.listIterator(commands.size());
+		return commands.listIterator();
 	}
 
 	public Clipboard<Perspective> getClipboard () {
 		return clipBoard;
+	}
+
+	public void setClipBoard(Clipboard<Perspective> clipBoard) {
+		this.clipBoard = clipBoard;
 	}
 
 	@Override
