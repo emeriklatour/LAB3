@@ -92,8 +92,10 @@ public class Panneau extends Vue {
 		this.addMouseWheelListener(new MouseWheelListener() {
 			@Override
 			public void mouseWheelMoved(MouseWheelEvent e) {
-				Zoom zoom = new Zoom(side, e.getPreciseWheelRotation() * 100);
-				Controller.getInstance().handleCommand(zoom);
+				if (perspective.getZoomFactor() + e.getPreciseWheelRotation() * 1000 > 100) {
+					Zoom zoom = new Zoom(side, e.getPreciseWheelRotation() * 1000);
+					Controller.getInstance().handleCommand(zoom);
+				}
 			}
 		});
 	}

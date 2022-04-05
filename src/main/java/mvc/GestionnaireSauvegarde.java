@@ -1,21 +1,10 @@
 package mvc;
-
-import command.impl.Copy;
-import copie.strategie.impl.CopyBoth;
-import copie.strategie.impl.CopyNone;
-import copie.strategie.impl.CopyTranslate;
-import copie.strategie.impl.CopyZoom;
 import mvc.modele.Modele;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.io.*;
 
 public class GestionnaireSauvegarde {
 	private static GestionnaireSauvegarde gSauvegarde = new GestionnaireSauvegarde();
 	private Controller controller;
-	private boolean isImageLoaded = false;
 
 	public static GestionnaireSauvegarde getInstance() {
 		return gSauvegarde;
@@ -27,7 +16,6 @@ public class GestionnaireSauvegarde {
 
 	public void loadNewImage(String path) {
 		controller.getModele().getImage().setImagePath(path);
-		isImageLoaded = true;
 	}
 
 	/*
