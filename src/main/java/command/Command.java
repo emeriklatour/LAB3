@@ -7,5 +7,5 @@ public interface Command {
 
 	void revert(Controller controller);
 
-	int getSide();
+	int getSide(int side);
 }

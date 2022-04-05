@@ -1,11 +1,22 @@
 package mvc;
 
+import command.impl.Copy;
+import command.impl.Paste;
+import copie.strategie.impl.CopyBoth;
+import copie.strategie.impl.CopyNone;
+import copie.strategie.impl.CopyTranslate;
+import copie.strategie.impl.CopyZoom;
 import mvc.modele.Modele;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.io.*;
 
 public class GestionnaireSauvegarde {
 	private static GestionnaireSauvegarde gSauvegarde = new GestionnaireSauvegarde();
 	private Controller controller;
+	private boolean isImageLoaded = false;
 
 	public static GestionnaireSauvegarde getInstance() {
 		return gSauvegarde;
@@ -17,6 +28,7 @@ public class GestionnaireSauvegarde {
 
 	public void loadNewImage(String path) {
 		controller.getModele().getImage().setImagePath(path);
+		isImageLoaded = true;
 	}
 
 	/*
@@ -55,5 +67,74 @@ public class GestionnaireSauvegarde {
 			System.out.println("");
 			c.printStackTrace();
 		}
+	}
+
+	public void createCopyMenu(){
+		JFrame copyFrame = new JFrame("Copy Menu");
+		JRadioButton copyTranslate = new JRadioButton("Copy Translate");
+		copyTranslate.setActionCommand("translate");
+		JRadioButton copyZoom = new JRadioButton("Copy Zoom");
+		copyZoom.setActionCommand("zoom");
+		JRadioButton copyBoth = new JRadioButton("Copy Both");
+		copyBoth.setActionCommand("both");
+		JRadioButton copyNone = new JRadioButton("Copy None");
+		copyNone.setActionCommand("none");
+
+		ButtonGroup copyGroup = new ButtonGroup();
+		JPanel radioPanel = new JPanel(new GridLayout(5,1,4,4));
+		copyGroup.add(copyTranslate);
+		copyGroup.add(copyZoom);
+		copyGroup.add(copyBoth);
+		copyGroup.add(copyNone);
+		JButton confirmCopy = new JButton(new AbstractAction("copy") {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getActionCommand().equals("copy")) {
+					controller.handleCommand(setStrategie(copyGroup.getSelection().getActionCommand()));
+					copyFrame.dispose();
+				}
+			}
+		});
+		confirmCopy.setPreferredSize(new Dimension(100,30));
+
+
+
+		radioPanel.add(copyTranslate);
+		radioPanel.add(copyZoom);
+		radioPanel.add(copyBoth);
+		radioPanel.add(copyNone);
+		radioPanel.add(confirmCopy);
+
+		radioPanel.setBounds(200, 200, 300, 100);
+		radioPanel.setOpaque(false);
+
+		copyFrame.getContentPane().add(radioPanel);
+
+		copyFrame.setSize(400, 400);
+		copyFrame.setVisible(true);
+	}
+
+	private Copy setStrategie(String strategie) {
+		Copy copy = new Copy(null);
+		switch (strategie){
+			case "translate":
+				copy = new Copy(new CopyTranslate());
+				break;
+			case "zoom":
+				copy = new Copy(new CopyZoom());
+				break;
+			case "both":
+				copy = new Copy(new CopyBoth());
+				break;
+			case "none":
+				copy = new Copy(new CopyNone());
+				break;
+		}
+		return copy;
+	}
+
+	public void paste(){
+		Paste paste = new Paste(controller.getModele().getPerspective(0), controller.getClipboard());
+		controller.handleCommand(paste);
 	}
 }

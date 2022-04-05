@@ -7,6 +7,7 @@ import javax.swing.*;
 public abstract class Vue extends JPanel implements Observer {
 	@Override
 	public void update() {
+		revalidate();
 		repaint();
 	}
 }

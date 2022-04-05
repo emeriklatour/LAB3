@@ -6,7 +6,7 @@ import java.io.Serializable;
 public class Perspective extends Observable implements Serializable {
 	private int posX;
 	private int posY;
-	private int zoomFactor;
+	private double zoomFactor;
 
 	public Perspective() {
 		this.posX = 0;
@@ -22,7 +22,7 @@ public class Perspective extends Observable implements Serializable {
 		return posY;
 	}
 
-	public int getZoomFactor() {
+	public double getZoomFactor() {
 		return zoomFactor;
 	}
 
@@ -36,7 +36,7 @@ public class Perspective extends Observable implements Serializable {
 		notifyObservers();
 	}
 
-	public void setZoomFactor(int zoomFactor) {
+	public void setZoomFactor(double zoomFactor) {
 		this.zoomFactor = zoomFactor;
 		notifyObservers();
 	}
