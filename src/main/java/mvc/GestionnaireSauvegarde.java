@@ -133,8 +133,8 @@ public class GestionnaireSauvegarde {
 		return copy;
 	}
 
-	public void paste(){
-		Paste paste = new Paste(controller.getModele().getPerspective(0), controller.getClipboard());
+	public void paste(int side){
+		Paste paste = new Paste(controller.getModele().getPerspective(side), controller.getClipboard());
 		controller.handleCommand(paste);
 	}
 }

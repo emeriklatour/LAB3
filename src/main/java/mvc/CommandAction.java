@@ -21,7 +21,7 @@ public class CommandAction extends AbstractAction {
                 GestionnaireSauvegarde.getInstance().createCopyMenu(side);
                 break;
             case "Paste":
-                GestionnaireSauvegarde.getInstance().paste();
+                GestionnaireSauvegarde.getInstance().paste(side);
                 break;
             case "Undo":
                 break;
