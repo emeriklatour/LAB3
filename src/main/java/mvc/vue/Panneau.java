@@ -4,6 +4,7 @@ import command.impl.Translate;
 import command.impl.Zoom;
 import mvc.CommandAction;
 import mvc.Controller;
+import mvc.GestionnaireSauvegarde;
 import mvc.modele.Image;
 import mvc.modele.Perspective;
 
@@ -94,6 +95,10 @@ public class Panneau extends Vue {
 				else if (SwingUtilities.isLeftMouseButton(e)) {
 
 				}
+			}
+
+			public void mouseReleased(MouseEvent e){
+				GestionnaireSauvegarde.getInstance().savePerspective(perspective, side);
 			}
 		});
 

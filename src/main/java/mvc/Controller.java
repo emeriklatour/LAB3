@@ -30,6 +30,10 @@ public class Controller implements IController, Serializable {
 		executedCommands = generateEmptyHistory(modele.getNbPerspective());
 	}
 
+	public void setNewModele(Perspective p, int side){
+		this.modele.copyPerspective(p, side);
+	}
+
 	public ListIterator<Command> getExecutedCommands(int side) {
 		ArrayList<Command> commands = executedCommands.get(side);
 		return commands.listIterator(commands.size());

@@ -7,6 +7,7 @@ import copie.strategie.impl.CopyNone;
 import copie.strategie.impl.CopyTranslate;
 import copie.strategie.impl.CopyZoom;
 import mvc.modele.Modele;
+import mvc.modele.Perspective;
 
 import javax.swing.*;
 import java.awt.*;
@@ -67,6 +68,12 @@ public class GestionnaireSauvegarde {
 			System.out.println("");
 			c.printStackTrace();
 		}
+
+		System.out.println();
+	}
+
+	public void savePerspective (Perspective p, int side){
+		controller.setNewModele(p, side);
 	}
 
 	public void createCopyMenu(int side){

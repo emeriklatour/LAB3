@@ -23,6 +23,7 @@ public class Modele implements Serializable {
 		CopyBoth copyBoth = new CopyBoth();
 		IntStream.range(0, perspectives.length)
 				.forEach(s -> copyBoth.paste(perspectives[s], m.getPerspective(s)));
+		System.out.println();
 	}
 
 	public Perspective getPerspective(int side) {
@@ -31,5 +32,10 @@ public class Modele implements Serializable {
 
 	public int getNbPerspective() {
 		return perspectives.length;
+	}
+
+	public void copyPerspective(Perspective p, int side){
+		CopyBoth copyBoth = new CopyBoth();
+		copyBoth.paste(p, this.perspectives[side]);
 	}
 }
