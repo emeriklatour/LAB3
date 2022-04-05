@@ -21,8 +21,9 @@ public class Copy extends Clipboard implements Command {
     @Override
     public void execute(Controller controller) {
         Perspective currPerspective = controller.getModele().getPerspective(getSide(0));
-        currPerspective.removeObserver(new Panneau());
-        oldClipboard.setSavedState(currPerspective);
+        Perspective p = new Perspective();
+        p.copyFrom(currPerspective);
+        oldClipboard.setSavedState(p);
         controller.setClipBoard(oldClipboard);
     }
 

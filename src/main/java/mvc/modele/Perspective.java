@@ -1,7 +1,9 @@
 package mvc.modele;
 
+import copie.strategie.impl.CopyBoth;
 import mvc.observateur.Observable;
 import java.io.Serializable;
+import java.util.PropertyPermission;
 
 public class Perspective extends Observable implements Serializable {
 	private int posX;
@@ -39,5 +41,10 @@ public class Perspective extends Observable implements Serializable {
 	public void setZoomFactor(double zoomFactor) {
 		this.zoomFactor = zoomFactor;
 		notifyObservers();
+	}
+
+	public void copyFrom(Perspective p){
+		CopyBoth copyBoth = new CopyBoth();
+		copyBoth.paste(p, this);
 	}
 }
