@@ -5,10 +5,10 @@ import mvc.Controller;
 import mvc.modele.Perspective;
 
 public class Zoom implements Command {
-    public int zoomPointX;
-    public int zoomPointY;
-    public double zoomLevel;
-    public int side;
+    private int zoomPointX;
+    private int zoomPointY;
+    private double zoomLevel;
+    private int side;
 
     public Zoom(int zoomPointX, int zoomPointY, double zoomLevel, int side) {
         this.zoomPointX = zoomPointX;
@@ -27,11 +27,14 @@ public class Zoom implements Command {
 
     @Override
     public void revert(Controller controller) {
-
+        Perspective currPerspective = controller.getModele().getPerspective(side);
+        currPerspective.setPosX(-zoomPointX);
+        currPerspective.setPosY(-zoomPointY);
+        currPerspective.setZoomFactor(-zoomLevel);
     }
 
     @Override
     public int getSide(int side) {
-        return 0;
+        return side;
     }
 }

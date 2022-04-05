@@ -4,25 +4,26 @@ import command.Command;
 import mvc.Controller;
 
 public class Undo implements Command {
-    public Command revertedCommand;
-    public int side;
+    private int side;
+    private Command revertedCommand;
 
-    public Undo(Command revertedCommand, int side){
-        this.revertedCommand = revertedCommand;
+    public Undo(int side){
         this.side = side;
     }
+
     @Override
     public void execute(Controller controller) {
-
+        this.revertedCommand = controller.getExecutedCommands(side).previous();
+        revertedCommand.revert(controller);
     }
 
     @Override
     public void revert(Controller controller) {
-
+        revertedCommand.execute(controller);
     }
 
     @Override
     public int getSide(int side) {
-        return 0;
+        return side;
     }
 }

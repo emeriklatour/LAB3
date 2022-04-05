@@ -1,13 +1,11 @@
 package mvc;
 
 import command.impl.Copy;
-import command.impl.Paste;
 import copie.strategie.impl.CopyBoth;
 import copie.strategie.impl.CopyNone;
 import copie.strategie.impl.CopyTranslate;
 import copie.strategie.impl.CopyZoom;
 import mvc.modele.Modele;
-import mvc.modele.Perspective;
 
 import javax.swing.*;
 import java.awt.*;
@@ -70,78 +68,5 @@ public class GestionnaireSauvegarde {
 		}
 
 		System.out.println();
-	}
-
-	public void savePerspective (Perspective p, int side){
-		controller.setNewModele(p, side);
-	}
-
-	public void createCopyMenu(int side){
-		JFrame copyFrame = new JFrame("Copy Menu");
-		JRadioButton copyTranslate = new JRadioButton("Copy Translate");
-		copyTranslate.setActionCommand("translate");
-		JRadioButton copyZoom = new JRadioButton("Copy Zoom");
-		copyZoom.setActionCommand("zoom");
-		JRadioButton copyBoth = new JRadioButton("Copy Both");
-		copyBoth.setActionCommand("both");
-		JRadioButton copyNone = new JRadioButton("Copy None");
-		copyNone.setActionCommand("none");
-
-		ButtonGroup copyGroup = new ButtonGroup();
-		JPanel radioPanel = new JPanel(new GridLayout(5,1,4,4));
-		copyGroup.add(copyTranslate);
-		copyGroup.add(copyZoom);
-		copyGroup.add(copyBoth);
-		copyGroup.add(copyNone);
-		JButton confirmCopy = new JButton(new AbstractAction("copy") {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (e.getActionCommand().equals("copy")) {
-					controller.handleCommand(setStrategie(copyGroup.getSelection().getActionCommand(), side));
-					copyFrame.dispose();
-				}
-			}
-		});
-		confirmCopy.setPreferredSize(new Dimension(100,30));
-
-
-
-		radioPanel.add(copyTranslate);
-		radioPanel.add(copyZoom);
-		radioPanel.add(copyBoth);
-		radioPanel.add(copyNone);
-		radioPanel.add(confirmCopy);
-
-		radioPanel.setBounds(200, 200, 300, 100);
-		radioPanel.setOpaque(false);
-
-		copyFrame.getContentPane().add(radioPanel);
-
-		copyFrame.setSize(400, 400);
-		copyFrame.setVisible(true);
-	}
-
-	private Copy setStrategie(String strategie, int side) {
-		Copy copy = new Copy(null, side);
-		switch (strategie){
-			case "translate":
-				copy = new Copy(new CopyTranslate(), side);
-				break;
-			case "zoom":
-				copy = new Copy(new CopyZoom(), side);
-				break;
-			case "both":
-				copy = new Copy(new CopyBoth(), side);
-				break;
-			case "none":
-				copy = new Copy(new CopyNone(), side);
-				break;
-		}
-		return copy;
-	}
-
-	public void paste(int side){
-		Paste paste = new Paste(controller.getModele().getPerspective(side), controller.getClipboard());
-		controller.handleCommand(paste);
 	}
 }

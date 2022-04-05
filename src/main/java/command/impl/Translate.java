@@ -24,11 +24,13 @@ public class Translate implements Command {
 
     @Override
     public void revert(Controller controller) {
-
+        Perspective currPerspective = controller.getModele().getPerspective(side);
+        currPerspective.setPosX(-posX);
+        currPerspective.setPosY(-posY);
     }
 
     @Override
     public int getSide(int side) {
-        return 0;
+        return side;
     }
 }

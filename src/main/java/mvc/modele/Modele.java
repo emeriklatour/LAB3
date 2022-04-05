@@ -1,7 +1,6 @@
 package mvc.modele;
 
 import copie.strategie.impl.CopyBoth;
-import mvc.observateur.Observer;
 
 import java.io.Serializable;
 import java.util.stream.IntStream;

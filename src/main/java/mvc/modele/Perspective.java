@@ -3,7 +3,6 @@ package mvc.modele;
 import copie.strategie.impl.CopyBoth;
 import mvc.observateur.Observable;
 import java.io.Serializable;
-import java.util.PropertyPermission;
 
 public class Perspective extends Observable implements Serializable {
 	private int posX;
@@ -14,6 +13,12 @@ public class Perspective extends Observable implements Serializable {
 		this.posX = 0;
 		this.posY = 0;
 		this.zoomFactor = 1000;
+	}
+
+	public Perspective(int posX, int posY, double zoomFactor) {
+		this.posX = posX;
+		this.posY = posY;
+		this.zoomFactor = zoomFactor;
 	}
 
 	public int getPosX() {
@@ -46,5 +51,9 @@ public class Perspective extends Observable implements Serializable {
 	public void copyFrom(Perspective p){
 		CopyBoth copyBoth = new CopyBoth();
 		copyBoth.paste(p, this);
+	}
+
+	public Perspective clone() {
+		return new Perspective(this.posX, this.posY, this.zoomFactor);
 	}
 }

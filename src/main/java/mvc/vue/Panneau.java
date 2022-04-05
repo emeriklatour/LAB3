@@ -1,10 +1,11 @@
 package mvc.vue;
 
-import command.impl.Translate;
-import command.impl.Zoom;
-import mvc.CommandAction;
+import command.impl.*;
+import copie.strategie.impl.CopyBoth;
+import copie.strategie.impl.CopyNone;
+import copie.strategie.impl.CopyTranslate;
+import copie.strategie.impl.CopyZoom;
 import mvc.Controller;
-import mvc.GestionnaireSauvegarde;
 import mvc.modele.Image;
 import mvc.modele.Perspective;
 
@@ -32,16 +33,33 @@ public class Panneau extends Vue {
 		this.setBackground(new Color(0, 0, 255));
 	}
 
-	public Panneau() {
-	}
-
 	private JPopupMenu createCommandMenu(int side) {
 		final JPopupMenu menu = new JPopupMenu("Menu");
 
-		JMenuItem copy = new JMenuItem(new CommandAction("Copy", side));
-		JMenuItem paste = new JMenuItem(new CommandAction("Paste", side));
-		JMenuItem undo = new JMenuItem(new CommandAction("Undo", side));
-		JMenuItem redo = new JMenuItem(new CommandAction("Redo", side));
+		JMenuItem copy = new JMenuItem(new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				createCopyMenu(side);
+			}
+		});
+		JMenuItem paste = new JMenuItem(new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Controller.getInstance().handleCommand(new Paste(side));
+			}
+		});
+		JMenuItem undo = new JMenuItem(new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Controller.getInstance().handleCommand(new Undo(side));
+			}
+		});
+		JMenuItem redo = new JMenuItem(new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Controller.getInstance().handleCommand(new Redo(side));
+			}
+		});
 
 		menu.add(copy);
 		menu.add(paste);
@@ -98,7 +116,7 @@ public class Panneau extends Vue {
 			}
 
 			public void mouseReleased(MouseEvent e){
-				GestionnaireSauvegarde.getInstance().savePerspective(perspective, side);
+				//GestionnaireSauvegarde.getInstance().savePerspective(perspective, side); WTF
 			}
 		});
 
@@ -132,5 +150,59 @@ public class Panneau extends Vue {
 				Controller.getInstance().handleCommand(zoomClass);
 			}
 		});
+	}
+
+	public void createCopyMenu(int side){
+		JFrame copyFrame = new JFrame("Copy Menu");
+		JRadioButton copyTranslate = new JRadioButton("Copy Translate");
+		copyTranslate.setActionCommand("translate");
+		JRadioButton copyZoom = new JRadioButton("Copy Zoom");
+		copyZoom.setActionCommand("zoom");
+		JRadioButton copyBoth = new JRadioButton("Copy Both");
+		copyBoth.setActionCommand("both");
+		JRadioButton copyNone = new JRadioButton("Copy None");
+		copyNone.setActionCommand("none");
+
+		ButtonGroup copyGroup = new ButtonGroup();
+		JPanel radioPanel = new JPanel(new GridLayout(5,1,4,4));
+		copyGroup.add(copyTranslate);
+		copyGroup.add(copyZoom);
+		copyGroup.add(copyBoth);
+		copyGroup.add(copyNone);
+		JButton confirmCopy = new JButton(new AbstractAction("copy") {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String s = copyGroup.getSelection().getActionCommand();
+				if (e.getActionCommand().equals("copy")) {
+					Controller.getInstance().handleCommand(new Copy(side,
+							s.equals("translate")
+									? new CopyTranslate()
+									: s.equals("zoom")
+									? new CopyZoom()
+									: s.equals("both")
+									? new CopyBoth()
+									: new CopyNone()
+					));
+					copyFrame.dispose();
+				}
+			}
+		});
+		confirmCopy.setPreferredSize(new Dimension(100,30));
+
+
+
+		radioPanel.add(copyTranslate);
+		radioPanel.add(copyZoom);
+		radioPanel.add(copyBoth);
+		radioPanel.add(copyNone);
+		radioPanel.add(confirmCopy);
+
+		radioPanel.setBounds(200, 200, 300, 100);
+		radioPanel.setOpaque(false);
+
+		copyFrame.getContentPane().add(radioPanel);
+
+		copyFrame.setSize(400, 400);
+		copyFrame.setVisible(true);
 	}
 }

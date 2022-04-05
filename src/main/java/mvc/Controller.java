@@ -14,8 +14,7 @@ public class Controller implements IController, Serializable {
 	private static Controller controllerSingleton = new Controller();
 	private ArrayList<ArrayList<Command>> executedCommands;
 	private Modele modele;
-	private Clipboard<Perspective> clipBoard = new Clipboard<>();
-	private int side;
+	private Clipboard<Perspective> clipBoard;
 
 	public static IController getInstance() {
 		return controllerSingleton;
@@ -28,10 +27,6 @@ public class Controller implements IController, Serializable {
 	public void setModele(Modele modele) {
 		this.modele = modele;
 		executedCommands = generateEmptyHistory(modele.getNbPerspective());
-	}
-
-	public void setNewModele(Perspective p, int side){
-		this.modele.copyPerspective(p, side);
 	}
 
 	public ListIterator<Command> getExecutedCommands(int side) {
@@ -64,14 +59,4 @@ public class Controller implements IController, Serializable {
 			executedCommands.get(command.getSide(0)).add(command);
 		}
 	}
-
-	public void setSide(int side){
-		this.side = side;
-	}
-
-	public int getSide(){
-		return side;
-	}
-
-
 }
