@@ -1,6 +1,7 @@
 package mvc.modele;
 
 import copie.strategie.impl.CopyBoth;
+import mvc.observateur.Observer;
 
 import java.io.Serializable;
 import java.util.stream.IntStream;
@@ -22,8 +23,7 @@ public class Modele implements Serializable {
 		this.image.setImagePath(m.getImage().getImagePath());
 		CopyBoth copyBoth = new CopyBoth();
 		IntStream.range(0, perspectives.length)
-				.forEach(s -> copyBoth.paste(perspectives[s], m.getPerspective(s)));
-		System.out.println();
+				.forEach(s -> copyBoth.paste(m.getPerspective(s), perspectives[s]));
 	}
 
 	public Perspective getPerspective(int side) {
