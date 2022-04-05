@@ -55,8 +55,8 @@ public class Controller implements IController, Serializable {
 	}
 
 	private void registerCommand(Command command) {
-		if (command.getSide(0) != -1) {
-			executedCommands.get(command.getSide(0)).add(command);
+		if (command.getSide() != -1) {
+			executedCommands.get(command.getSide()).add(command);
 		}
 	}
 }

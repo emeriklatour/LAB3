@@ -25,7 +25,7 @@ public class Redo implements Command {
 	}
 
 	@Override
-	public int getSide(int side) {
+	public int getSide() {
 		return side;
 	}
 

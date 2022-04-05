@@ -30,7 +30,7 @@ public class Translate implements Command {
     }
 
     @Override
-    public int getSide(int side) {
+    public int getSide() {
         return side;
     }
 }

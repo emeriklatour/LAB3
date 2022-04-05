@@ -33,7 +33,7 @@ public abstract class Initializer {
             public void revert(Controller controller) {}
 
             @Override
-            public int getSide(int side) {
+            public int getSide() {
                 return -1;
             }
         };
