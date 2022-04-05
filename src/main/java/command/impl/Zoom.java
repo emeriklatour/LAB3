@@ -8,16 +8,18 @@ public class Zoom implements Command {
     public int zoomPointX;
     public int zoomPointY;
     public double zoomLevel;
+    public int side;
 
-    public Zoom(int zoomPointX, int zoomPointY, double zoomLevel) {
+    public Zoom(int zoomPointX, int zoomPointY, double zoomLevel, int side) {
         this.zoomPointX = zoomPointX;
         this.zoomPointY = zoomPointY;
         this.zoomLevel = zoomLevel;
+        this.side = side;
     }
 
     @Override
     public void execute(Controller controller) {
-        Perspective currPerspective = controller.getModele().getPerspective(getSide(0));
+        Perspective currPerspective = controller.getModele().getPerspective(side);
         currPerspective.setPosX(zoomPointX);
         currPerspective.setPosY(zoomPointY);
         currPerspective.setZoomFactor(zoomLevel);

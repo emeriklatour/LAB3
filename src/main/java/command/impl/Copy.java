@@ -9,9 +9,11 @@ import mvc.vue.Panneau;
 
 public class Copy extends Clipboard implements Command {
     public Clipboard<Perspective> oldClipboard = new Clipboard<Perspective>();
+    public int side;
 
-    public Copy(StrategieCopie<?> strategieCopie){
+    public Copy(StrategieCopie<?> strategieCopie, int side){
         oldClipboard.setStrategieCopie((StrategieCopie<Perspective>) strategieCopie);
+        this.side = side;
     }
 
     public Copy(){
@@ -20,7 +22,7 @@ public class Copy extends Clipboard implements Command {
 
     @Override
     public void execute(Controller controller) {
-        Perspective currPerspective = controller.getModele().getPerspective(getSide(0));
+        Perspective currPerspective = controller.getModele().getPerspective(side);
         Perspective p = new Perspective();
         p.copyFrom(currPerspective);
         oldClipboard.setSavedState(p);
@@ -35,6 +37,5 @@ public class Copy extends Clipboard implements Command {
     @Override
     public int getSide(int side) {
         return side;
-        // return controller.getModele().getNbPerspective() - 1;
     }
 }

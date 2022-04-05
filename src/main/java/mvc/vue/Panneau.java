@@ -34,13 +34,13 @@ public class Panneau extends Vue {
 	public Panneau() {
 	}
 
-	private JPopupMenu createCommandMenu() {
+	private JPopupMenu createCommandMenu(int side) {
 		final JPopupMenu menu = new JPopupMenu("Menu");
 
-		JMenuItem copy = new JMenuItem(new CommandAction("Copy"));
-		JMenuItem paste = new JMenuItem(new CommandAction("Paste"));
-		JMenuItem undo = new JMenuItem(new CommandAction("Undo"));
-		JMenuItem redo = new JMenuItem(new CommandAction("Redo"));
+		JMenuItem copy = new JMenuItem(new CommandAction("Copy", side));
+		JMenuItem paste = new JMenuItem(new CommandAction("Paste", side));
+		JMenuItem undo = new JMenuItem(new CommandAction("Undo", side));
+		JMenuItem redo = new JMenuItem(new CommandAction("Redo", side));
 
 		menu.add(copy);
 		menu.add(paste);
@@ -89,7 +89,10 @@ public class Panneau extends Vue {
 		currPanel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (SwingUtilities.isRightMouseButton(e) && e.getClickCount() == 1) {
-					createCommandMenu().show(currPanel, e.getX(), e.getY());
+					createCommandMenu(side).show(currPanel, e.getX(), e.getY());
+				}
+				else if (SwingUtilities.isLeftMouseButton(e)) {
+
 				}
 			}
 		});
@@ -97,7 +100,7 @@ public class Panneau extends Vue {
 		currPanel.addMouseMotionListener(new MouseMotionListener() {
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				Translate translate = new Translate(e.getX(), e.getY());
+				Translate translate = new Translate(e.getX(), e.getY(), side);
 				Controller.getInstance().handleCommand(translate);
 			}
 
@@ -120,7 +123,7 @@ public class Panneau extends Vue {
 				if (zoom < 0.0001) {
 					zoom = 0.001;
 				}
-				Zoom zoomClass = new Zoom(e.getX(), e.getY(), zoom);
+				Zoom zoomClass = new Zoom(e.getX(), e.getY(), zoom, side);
 				Controller.getInstance().handleCommand(zoomClass);
 			}
 		});

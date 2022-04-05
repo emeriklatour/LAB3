@@ -7,15 +7,17 @@ import mvc.modele.Perspective;
 public class Translate implements Command {
     public int posX;
     public int posY;
+    public int side;
 
-    public Translate(int posX, int posY) {
+    public Translate(int posX, int posY, int side) {
         this.posX = posX;
         this.posY = posY;
+        this.side = side;
     }
 
     @Override
     public void execute(Controller controller) {
-        Perspective currPerspective = controller.getModele().getPerspective(getSide(0));
+        Perspective currPerspective = controller.getModele().getPerspective(side);
         currPerspective.setPosX(posX);
         currPerspective.setPosY(posY);
     }

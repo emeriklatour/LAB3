@@ -69,7 +69,7 @@ public class GestionnaireSauvegarde {
 		}
 	}
 
-	public void createCopyMenu(){
+	public void createCopyMenu(int side){
 		JFrame copyFrame = new JFrame("Copy Menu");
 		JRadioButton copyTranslate = new JRadioButton("Copy Translate");
 		copyTranslate.setActionCommand("translate");
@@ -90,7 +90,7 @@ public class GestionnaireSauvegarde {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getActionCommand().equals("copy")) {
-					controller.handleCommand(setStrategie(copyGroup.getSelection().getActionCommand()));
+					controller.handleCommand(setStrategie(copyGroup.getSelection().getActionCommand(), side));
 					copyFrame.dispose();
 				}
 			}
@@ -114,20 +114,20 @@ public class GestionnaireSauvegarde {
 		copyFrame.setVisible(true);
 	}
 
-	private Copy setStrategie(String strategie) {
-		Copy copy = new Copy(null);
+	private Copy setStrategie(String strategie, int side) {
+		Copy copy = new Copy(null, side);
 		switch (strategie){
 			case "translate":
-				copy = new Copy(new CopyTranslate());
+				copy = new Copy(new CopyTranslate(), side);
 				break;
 			case "zoom":
-				copy = new Copy(new CopyZoom());
+				copy = new Copy(new CopyZoom(), side);
 				break;
 			case "both":
-				copy = new Copy(new CopyBoth());
+				copy = new Copy(new CopyBoth(), side);
 				break;
 			case "none":
-				copy = new Copy(new CopyNone());
+				copy = new Copy(new CopyNone(), side);
 				break;
 		}
 		return copy;
