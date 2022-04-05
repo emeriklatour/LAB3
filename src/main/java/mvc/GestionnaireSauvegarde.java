@@ -1,5 +1,4 @@
 package mvc;
-
 import mvc.modele.Modele;
 import java.io.*;
 
@@ -55,5 +54,7 @@ public class GestionnaireSauvegarde {
 			System.out.println("");
 			c.printStackTrace();
 		}
+
+		System.out.println();
 	}
 }
