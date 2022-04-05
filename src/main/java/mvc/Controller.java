@@ -31,7 +31,7 @@ public class Controller implements IController, Serializable {
 
 	public ListIterator<Command> getExecutedCommands(int side) {
 		ArrayList<Command> commands = executedCommands.get(side);
-		return commands.listIterator(commands.size());
+		return commands.listIterator();
 	}
 
 	public Clipboard<Perspective> getClipboard () {

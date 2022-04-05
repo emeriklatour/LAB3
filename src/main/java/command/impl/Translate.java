@@ -18,15 +18,15 @@ public class Translate implements Command {
     @Override
     public void execute(Controller controller) {
         Perspective currPerspective = controller.getModele().getPerspective(side);
-        currPerspective.setPosX(posX);
-        currPerspective.setPosY(posY);
+        currPerspective.setPosX(currPerspective.getPosX() + posX);
+        currPerspective.setPosY(currPerspective.getPosY() + posY);
     }
 
     @Override
     public void revert(Controller controller) {
         Perspective currPerspective = controller.getModele().getPerspective(side);
-        currPerspective.setPosX(-posX);
-        currPerspective.setPosY(-posY);
+        currPerspective.setPosX(currPerspective.getPosX() - posX);
+        currPerspective.setPosY(currPerspective.getPosY() - posY);
     }
 
     @Override

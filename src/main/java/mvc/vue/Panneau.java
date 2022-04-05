@@ -12,17 +12,12 @@ import mvc.modele.Perspective;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 
 public class Panneau extends Vue {
 	protected int side;
 	protected Image image;
 	protected Perspective perspective;
-	protected JPanel currPanel;
-	protected double zoom = 0.5;
-	protected int zoomX;
-	protected int zoomY;
+	protected JPanel currPanel = this;
 
 	public Panneau(int side, Image image, Perspective perspective) {
 		this.side = side;
@@ -30,6 +25,7 @@ public class Panneau extends Vue {
 		this.perspective = perspective;
 		image.addObserver(this);
 		perspective.addObserver(this);
+		initListeners();
 		this.setBackground(new Color(0, 0, 255));
 	}
 
@@ -63,28 +59,8 @@ public class Panneau extends Vue {
 		return menu;
 	}
 
-	public void setCurrPanel(JPanel currPanel) {
-		this.currPanel = currPanel;
-	}
-
-	@Override
-	public void paint(Graphics g) {
-		//super.paint(g);
-		Graphics2D g2 = (Graphics2D) g;
-		super.paintComponent(g2);
-		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-		int w = perspective.getPosX();
-		int h = perspective.getPosY();
-		double imageWidth = zoom * ( perspective.getZoomFactor() / 1000);
-		double imageHeight = zoom * ( perspective.getZoomFactor() / 1000);
-		double x = (w - zoom * imageWidth);
-		double y = (h - zoom * imageHeight);
-		AffineTransform at = AffineTransform.getTranslateInstance(x, y);
-		at.scale(zoom, zoom);
-		g2.drawRenderedImage((BufferedImage) image.getImageToPaint(), at);
-
-		currPanel.addMouseListener(new MouseAdapter() {
+	public void initListeners() {
+		this.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (SwingUtilities.isRightMouseButton(e) && e.getClickCount() == 1) {
 					createCommandMenu(side).show(currPanel, e.getX(), e.getY());
@@ -93,42 +69,46 @@ public class Panneau extends Vue {
 
 				}
 			}
-
-			public void mouseReleased(MouseEvent e){
-				//GestionnaireSauvegarde.getInstance().savePerspective(perspective, side); WTF
-			}
 		});
 
-		currPanel.addMouseMotionListener(new MouseMotionListener() {
+		Point origin = new Point();
+		this.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseDragged(MouseEvent e) {
-				Translate translate = new Translate(e.getX(), e.getY(), side);
-				Controller.getInstance().handleCommand(translate);
+			public void mousePressed(MouseEvent e) {
+				origin.setLocation(e.getX(), e.getY());
 			}
 
 			@Override
-			public void mouseMoved(MouseEvent e) {
-
+			public void mouseReleased(MouseEvent e) {
+				int deltaX = e.getX() - origin.x;
+				int deltaY = e.getY() - origin.y;
+				if (deltaX != 0 && deltaY != 0) {
+					Translate translate = new Translate(deltaX, deltaY, side);
+					Controller.getInstance().handleCommand(translate);
+				}
 			}
 		});
 
-		currPanel.addMouseWheelListener(new MouseWheelListener() {
+		this.addMouseWheelListener(new MouseWheelListener() {
 			@Override
 			public void mouseWheelMoved(MouseWheelEvent e) {
-				zoomX = e.getX();
-				zoomY = e.getY();
-				if (e.getPreciseWheelRotation() > 0){
-					zoom -= 0.001;
-				} else {
-					zoom += 0.001;
-				}
-				if (zoom < 0.0001) {
-					zoom = 0.001;
-				}
-				Zoom zoomClass = new Zoom(e.getX(), e.getY(), zoom, side);
-				Controller.getInstance().handleCommand(zoomClass);
+				Zoom zoom = new Zoom(side, e.getPreciseWheelRotation() * 100);
+				Controller.getInstance().handleCommand(zoom);
 			}
 		});
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		g.drawImage(
+				image.getImageToPaint(),
+				perspective.getPosX(),
+				perspective.getPosY(),
+				(int) Math.floor(300 * (perspective.getZoomFactor() / 1000)),
+				(int) Math.floor(300 * (perspective.getZoomFactor() / 1000)),
+				null
+		);
 	}
 
 	public void createCopyMenu(int side){

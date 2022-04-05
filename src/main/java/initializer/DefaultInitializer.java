@@ -27,18 +27,15 @@ public class DefaultInitializer extends Initializer {
         ArrayList<JPanel> panels = new ArrayList<>();
         panels.add(new Vignette(m.getImage()));
         IntStream.range(0, m.getNbPerspective())
-                .forEach(s -> {
+                .forEach(s ->
                     panels.add(
                             new Panneau(
                                     s,
                                     m.getImage(),
                                     m.getPerspective(s)
                             )
-                    );
-                    Panneau currPanneau = (Panneau) panels.get(s + 1);
-                    currPanneau.setCurrPanel(panels.get(s + 1));
-                    panels.set(s + 1, currPanneau);
-                });
+                    )
+                );
         return panels;
     }
 }
