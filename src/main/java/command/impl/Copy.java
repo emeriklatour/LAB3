@@ -21,7 +21,7 @@ public class Copy implements Command {
     public void execute(Controller controller) {
         Perspective currPerspective = controller.getModele().getPerspective(side);
         this.oldClipboard = controller.getClipboard();
-        this.newClipboard = new Clipboard<>(currPerspective, strategieCopie);
+        this.newClipboard = new Clipboard<>(currPerspective.clone(), strategieCopie);
         controller.setClipBoard(newClipboard);
     }
 
