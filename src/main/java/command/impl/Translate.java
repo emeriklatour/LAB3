@@ -5,9 +5,9 @@ import mvc.Controller;
 import mvc.modele.Perspective;
 
 public class Translate implements Command {
-    public int posX;
-    public int posY;
-    public int side;
+    private int posX;
+    private int posY;
+    private int side;
 
     public Translate(int posX, int posY, int side) {
         this.posX = posX;
