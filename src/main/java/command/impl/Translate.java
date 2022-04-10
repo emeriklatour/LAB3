@@ -16,9 +16,9 @@ import mvc.modele.Perspective;
  * Commande nous permettant de bouger une perspective d'un endroit a un autre dans le panneau
  */
 public class Translate implements Command {
-    public int posX;
-    public int posY;
-    public int side;
+    private int posX;
+    private int posY;
+    private int side;
 
     /**
      * Constructeur de la classe Tranlate

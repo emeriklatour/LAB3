@@ -13,12 +13,32 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Panneau extends Vue {
-	protected int side;
-	protected Image image;
-	protected Perspective perspective;
-	protected JPanel currPanel = this;
+/******************************************************
+						Panneau
+ * Cours:  LOG121
+ * Laboratoire: Laboratoire 3
+ * @author Emerik Latour, Lucas Cimino, Philippe Tanguay-Gaudreau
+ * @date 2022/04/12
+ *******************************************************/
 
+/**
+ * Cette classe représente le panneau des perspectives intéractives de
+ * l'application.
+ */
+public class Panneau extends Vue {
+	private final int side;
+	private Image image;
+	private Perspective perspective;
+	private JPanel currPanel = this;
+
+	/**
+	 * Constructeur par paramêtre de la classe Panneau.
+	 *
+	 * @param side l'index du panneau
+	 * @param image l'image à utiliser pour la perspective intéractive
+	 * @param perspective la perspective à utiliser pour recueillir les données
+	 *                    nécéssaire à peinturer l'image
+	 */
 	public Panneau(int side, Image image, Perspective perspective) {
 		this.side = side;
 		this.image = image;
@@ -29,50 +49,35 @@ public class Panneau extends Vue {
 		this.setBackground(new Color(0, 0, 255));
 	}
 
-	private JPopupMenu createCommandMenu(int side) {
-		final JPopupMenu menu = new JPopupMenu("Menu");
-
-		JMenuItem copy = new JMenuItem("Copy");
-		copy.addActionListener((ActionEvent e) -> {
-			createCopyMenu(side);
-		});
-		JMenuItem paste = new JMenuItem("Paste");
-		paste.addActionListener((ActionEvent e) -> {
-			Controller.getInstance().handleCommand(new Paste(side));
-
-		});
-		JMenuItem undo = new JMenuItem("Undo");
-		undo.addActionListener((ActionEvent e) -> {
-			Controller.getInstance().handleCommand(new Undo(side));
-		});
-
-		JMenuItem redo = new JMenuItem("Redo");
-		redo.addActionListener((ActionEvent e) -> {
-			Controller.getInstance().handleCommand(new Redo(side));
-		});
-
-		menu.add(copy);
-		menu.add(paste);
-		menu.add(undo);
-		menu.add(redo);
-
-		return menu;
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		g.drawImage(
+				image.getImageToPaint(),
+				perspective.getPosX(),
+				perspective.getPosY(),
+				(int) Math.floor(300 * (perspective.getZoomFactor() / 1000)),
+				(int) Math.floor(300 * (perspective.getZoomFactor() / 1000)),
+				null
+		);
 	}
 
-	public void initListeners() {
+	/**
+	 * Initialise les listeners pour les actions que l'utilisateur peut
+	 * réaliser à partir de ce Panneau.
+	 */
+	private void initListeners() {
 		this.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (SwingUtilities.isRightMouseButton(e) && e.getClickCount() == 1) {
-					createCommandMenu(side).show(currPanel, e.getX(), e.getY());
-				}
-				else if (SwingUtilities.isLeftMouseButton(e)) {
-
+					createCommandMenu().show(currPanel, e.getX(), e.getY());
 				}
 			}
 		});
 
-		Point origin = new Point();
 		this.addMouseListener(new MouseAdapter() {
+			Point origin = new Point();
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 				origin.setLocation(e.getX(), e.getY());
@@ -89,31 +94,50 @@ public class Panneau extends Vue {
 			}
 		});
 
-		this.addMouseWheelListener(new MouseWheelListener() {
-			@Override
-			public void mouseWheelMoved(MouseWheelEvent e) {
-				if (perspective.getZoomFactor() + e.getPreciseWheelRotation() * 1000 > 100) {
-					Zoom zoom = new Zoom(side, e.getPreciseWheelRotation() * 1000);
-					Controller.getInstance().handleCommand(zoom);
-				}
+		this.addMouseWheelListener( e -> {
+			if (perspective.getZoomFactor() + e.getPreciseWheelRotation() * 1000
+					> 100) {
+				Zoom zoom = new Zoom(side, e.getPreciseWheelRotation() * 1000);
+				Controller.getInstance().handleCommand(zoom);
 			}
 		});
 	}
 
-	@Override
-	public void paint(Graphics g) {
-		super.paint(g);
-		g.drawImage(
-				image.getImageToPaint(),
-				perspective.getPosX(),
-				perspective.getPosY(),
-				(int) Math.floor(300 * (perspective.getZoomFactor() / 1000)),
-				(int) Math.floor(300 * (perspective.getZoomFactor() / 1000)),
-				null
-		);
+	/**
+	 * Créer le menu de commande qui est utilisée quand l'utilisateur appuie sur
+	 * le click droit.
+	 *
+	 * @return l'instance du JPopupMenu créer
+	 */
+	private JPopupMenu createCommandMenu() {
+		final JPopupMenu menu = new JPopupMenu("Menu");
+
+		JMenuItem copy = new JMenuItem("Copy");
+		copy.addActionListener((ActionEvent e) -> createCopyMenu());
+		JMenuItem paste = new JMenuItem("Paste");
+		paste.addActionListener((ActionEvent e) ->
+			Controller.getInstance().handleCommand(new Paste(this.side)));
+		JMenuItem undo = new JMenuItem("Undo");
+		undo.addActionListener((ActionEvent e) ->
+				Controller.getInstance().handleCommand(new Undo(this.side)));
+
+		JMenuItem redo = new JMenuItem("Redo");
+		redo.addActionListener((ActionEvent e) ->
+				Controller.getInstance().handleCommand(new Redo(this.side)));
+
+		menu.add(copy);
+		menu.add(paste);
+		menu.add(undo);
+		menu.add(redo);
+
+		return menu;
 	}
 
-	public void createCopyMenu(int side){
+	/**
+	 * Créer le menu de copie utilisée quand l'utilisateur sélectionne le
+	 * l'option "Copy" du CommandMenu.
+	 */
+	private void createCopyMenu() {
 		JFrame copyFrame = new JFrame("Copy Menu");
 		JRadioButton copyTranslate = new JRadioButton("Copy Translate");
 		copyTranslate.setActionCommand("translate");
