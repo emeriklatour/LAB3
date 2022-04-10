@@ -7,6 +7,18 @@ import javax.swing.filechooser.FileSystemView;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
+/******************************************************
+ 					MenuFenetre
+ * Cours:  LOG121
+ * Laboratoire: Laboratoire 3
+ * @author Emerik Latour, Lucas Cimino, Philippe Tanguay-Gaudreau
+ * @date 2022/04/12
+ *******************************************************/
+
+/**
+ * Classe representant une barre "Menu". Nous permet entre autre de charger une image,
+ * quitter l'application, sauvegarder le modele courant et charger un modele recemment sauvegarde.
+ */
 public class MenuFenetre extends JMenuBar {
 	private static final long serialVersionUID = 1L;
 	private static final String MENU_FICHIER_TITRE = "Fichier";
