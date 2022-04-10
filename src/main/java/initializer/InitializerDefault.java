@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 /******************************************************
-                    DefaultInitializer
+                    InitializerDefault
  * Cours:  LOG121
  * Laboratoire: Laboratoire 3
  * @author Emerik Latour, Lucas Cimino, Philippe Tanguay-Gaudreau
@@ -21,7 +21,7 @@ import java.util.stream.IntStream;
  * Cette classe hérite de la classe template Initializer et est l'initialiseur par
  * défaut pour notre application.
  */
-public class DefaultInitializer extends Initializer {
+public class InitializerDefault extends Initializer {
     /**
      * Permet de creer le Modele. Dans cet implementation, il n'y a que
      * 2 perspectives, tel que demandé pour le laboratoire.
