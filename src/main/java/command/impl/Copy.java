@@ -26,7 +26,7 @@ public class Copy implements Command {
 
     /**
      * Constructeur de la classe "Copy"
-     * @param side l'index du panneau dont il faut copier la perspective
+     * @param side l'index du panneau ou il faut copier la perspective
      * @param strategieCopie la strategie de copie a appliquer
      */
     public Copy(int side, StrategieCopie<Perspective> strategieCopie){

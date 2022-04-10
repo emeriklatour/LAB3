@@ -24,7 +24,7 @@ public class Paste implements Command {
 
     /**
      * Constructeur de la classe "Paste"
-     * @param side Le cote de la perspective sur laquelle la commande doit etre appliquee
+     * @param side l'index du panneau ou il faut coller la perspective
      */
     public Paste(int side) {
         this.side = side;
