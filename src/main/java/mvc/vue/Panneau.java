@@ -46,7 +46,8 @@ public class Panneau extends Vue {
 		image.addObserver(this);
 		perspective.addObserver(this);
 		initListeners();
-		this.setBackground(new Color(0, 0, 255));
+		this.setBackground(Color.GRAY);
+		this.setBorder(BorderFactory.createLineBorder(Color.black));
 	}
 
 	@Override

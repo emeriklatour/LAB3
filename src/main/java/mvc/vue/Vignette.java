@@ -2,6 +2,7 @@ package mvc.vue;
 
 import mvc.modele.Image;
 
+import javax.swing.*;
 import java.awt.*;
 
 /******************************************************
@@ -27,7 +28,8 @@ public class Vignette extends Vue {
 	public Vignette(Image image) {
 		this.image = image;
 		image.addObserver(this);
-		this.setBackground(new Color(255, 255, 0));
+		this.setBackground(Color.lightGray);
+		this.setBorder(BorderFactory.createLineBorder(Color.black));
 	}
 
 	/**
